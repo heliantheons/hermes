@@ -485,10 +485,15 @@ func (h *Handler) GetApplication(c *gin.Context) {
 	c.JSON(http.StatusOK, dto.NewApplicationResponse(app))
 }
 
-// GetApplicationClientSecret GET /api/domains/:domain_id/applications/:app_id/client-secret
-func (h *Handler) GetApplicationClientSecret(c *gin.Context) {
+// GetApplicationSecret GET /api/domains/:domain_id/applications/:app_id/secrets/:secret_type
+func (h *Handler) GetApplicationSecret(c *gin.Context) {
 	domainID := c.Param("domain_id")
 	appID := c.Param("app_id")
+	secretType, err := ParseApplicationSecretType(c.Param("secret_type"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "unsupported application secret type"})
+		return
+	}
 	app, err := h.provision.GetApplication(c.Request.Context(), appID)
 	if err != nil || app.DomainID != domainID {
 		c.JSON(http.StatusNotFound, gin.H{"error": "application not found in this domain"})
@@ -497,7 +502,7 @@ func (h *Handler) GetApplicationClientSecret(c *gin.Context) {
 
 	c.Header("Cache-Control", "no-store")
 	c.Header("Pragma", "no-cache")
-	secret, err := h.key.GetApplicationClientSecret(c.Request.Context(), appID)
+	secret, err := h.key.GetApplicationSecret(c.Request.Context(), appID, secretType)
 	if err != nil {
 		if errors.Is(err, ErrApplicationSeedNotFound) {
 			c.JSON(http.StatusConflict, gin.H{"error": "application has no seed"})
@@ -508,9 +513,10 @@ func (h *Handler) GetApplicationClientSecret(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, dto.ApplicationClientSecretResponse{
-		ClientID:     appID,
-		ClientSecret: secret,
+	c.JSON(http.StatusOK, dto.ApplicationSecretResponse{
+		ClientID: appID,
+		Type:     string(secretType),
+		Secret:   secret,
 	})
 }
 

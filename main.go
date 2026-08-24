@@ -148,7 +148,7 @@ func startHTTP(services *hermes.Services) {
 				domainApps.POST("", adminRelation, handler.CreateApplication)
 				domainApps.PATCH("/:app_id", adminRelation, handler.UpdateApplication)
 				domainApps.DELETE("/:app_id", adminRelation, handler.DeleteApplication)
-				domainApps.GET("/:app_id/client-secret", adminRelation, handler.GetApplicationClientSecret)
+				domainApps.GET("/:app_id/secrets/:secret_type", adminRelation, handler.GetApplicationSecret)
 				domainApps.POST("/:app_id/idp-configs", adminRelation, handler.CreateApplicationIDPConfig)
 				domainApps.PATCH("/:app_id/idp-configs/:idp_type", adminRelation, handler.UpdateApplicationIDPConfig)
 				domainApps.DELETE("/:app_id/idp-configs/:idp_type", adminRelation, handler.DeleteApplicationIDPConfig)
