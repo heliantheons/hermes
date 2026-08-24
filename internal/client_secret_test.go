@@ -9,11 +9,11 @@ func TestDeriveApplicationSecret(t *testing.T) {
 	t.Parallel()
 
 	seed := bytes.Repeat([]byte{0x42}, 48)
-	first, err := deriveApplicationSecret(seed, ApplicationSecretTypeBasic)
+	first, err := deriveApplicationSecret(seed, ApplicationSecretTypeClientSecret)
 	if err != nil {
 		t.Fatalf("deriveApplicationSecret() error = %v", err)
 	}
-	second, err := deriveApplicationSecret(seed, ApplicationSecretTypeBasic)
+	second, err := deriveApplicationSecret(seed, ApplicationSecretTypeClientSecret)
 	if err != nil {
 		t.Fatalf("deriveApplicationSecret() second error = %v", err)
 	}
@@ -23,7 +23,7 @@ func TestDeriveApplicationSecret(t *testing.T) {
 	if len(first) != 43 {
 		t.Fatalf("derived secret length = %d, want 43", len(first))
 	}
-	if want := "G24kZfyp4aI6VIrms1ghmjMMuMA0vvEWkR5pEAU_UUY"; first != want {
+	if want := "5TSHOjfPvWkRKtg_IBoVtw0dq-8YKt6rVjUFxdo3J1k"; first != want {
 		t.Fatalf("derived secret = %q, want protocol test vector %q", first, want)
 	}
 
@@ -32,7 +32,7 @@ func TestDeriveApplicationSecret(t *testing.T) {
 func TestDeriveApplicationSecretRejectsInvalidInput(t *testing.T) {
 	t.Parallel()
 
-	if _, err := deriveApplicationSecret(make([]byte, 32), ApplicationSecretTypeBasic); err == nil {
+	if _, err := deriveApplicationSecret(make([]byte, 32), ApplicationSecretTypeClientSecret); err == nil {
 		t.Fatal("deriveApplicationSecret() accepted an invalid seed length")
 	}
 	if _, err := deriveApplicationSecret(make([]byte, 48), ApplicationSecretType("sign")); err == nil {
@@ -43,9 +43,12 @@ func TestDeriveApplicationSecretRejectsInvalidInput(t *testing.T) {
 func TestParseApplicationSecretType(t *testing.T) {
 	t.Parallel()
 
-	got, err := ParseApplicationSecretType("basic")
-	if err != nil || got != ApplicationSecretTypeBasic {
-		t.Fatalf("ParseApplicationSecretType(basic) = %q, %v", got, err)
+	got, err := ParseApplicationSecretType("client-secret")
+	if err != nil || got != ApplicationSecretTypeClientSecret {
+		t.Fatalf("ParseApplicationSecretType(client-secret) = %q, %v", got, err)
+	}
+	if _, err := ParseApplicationSecretType("basic"); err == nil {
+		t.Fatal("ParseApplicationSecretType() exposed the internal KDF purpose")
 	}
 	if _, err := ParseApplicationSecretType("encrypt"); err == nil {
 		t.Fatal("ParseApplicationSecretType() accepted an internal key purpose")

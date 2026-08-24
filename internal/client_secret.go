@@ -15,11 +15,11 @@ var (
 
 type ApplicationSecretType string
 
-const ApplicationSecretTypeBasic ApplicationSecretType = "basic"
+const ApplicationSecretTypeClientSecret ApplicationSecretType = "client-secret"
 
 func ParseApplicationSecretType(value string) (ApplicationSecretType, error) {
 	secretType := ApplicationSecretType(value)
-	if secretType != ApplicationSecretTypeBasic {
+	if secretType != ApplicationSecretTypeClientSecret {
 		return "", ErrUnsupportedApplicationSecret
 	}
 	return secretType, nil
