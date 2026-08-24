@@ -55,6 +55,19 @@ func (s *KeyService) GetApplicationKeys(ctx context.Context, appID string) ([][]
 	return s.getKeys(ctx, models.KeyOwnerApplication, appID)
 }
 
+// GetApplicationClientSecret 从当前应用主 seed 临时派生 client_secret。
+// 派生结果不会持久化；应用 seed 轮换后会自然得到新的 client_secret。
+func (s *KeyService) GetApplicationClientSecret(ctx context.Context, appID string) (string, error) {
+	keys, err := s.GetApplicationKeys(ctx, appID)
+	if err != nil {
+		return "", fmt.Errorf("获取应用密钥失败: %w", err)
+	}
+	if len(keys) == 0 {
+		return "", ErrApplicationSeedNotFound
+	}
+	return deriveApplicationClientSecret(keys[0])
+}
+
 // GetServiceKeys 获取服务的所有有效密钥（已解密）
 func (s *KeyService) GetServiceKeys(ctx context.Context, serviceID string) ([][]byte, error) {
 	return s.getKeys(ctx, models.KeyOwnerService, serviceID)

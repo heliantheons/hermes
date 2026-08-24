@@ -5,6 +5,12 @@ import (
 	"github.com/heliantheon/hermes/internal/models"
 )
 
+// ApplicationClientSecretResponse 是应用 OAuth client secret 的读取结果。
+type ApplicationClientSecretResponse struct {
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+}
+
 // IDPKeyCreateRequest 创建 IDP 密钥
 type IDPKeyCreateRequest struct {
 	IDPType string `json:"idp_type" binding:"required"`
