@@ -5,6 +5,13 @@ import (
 	"github.com/heliantheon/hermes/internal/models"
 )
 
+// ApplicationSecretResponse 是应用派生 secret 的读取结果。
+type ApplicationSecretResponse struct {
+	ClientID string `json:"client_id"`
+	Type     string `json:"type"`
+	Secret   string `json:"secret"`
+}
+
 // IDPKeyCreateRequest 创建 IDP 密钥
 type IDPKeyCreateRequest struct {
 	IDPType string `json:"idp_type" binding:"required"`
