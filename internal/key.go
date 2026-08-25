@@ -27,7 +27,11 @@ func generateEncryptedKey(aad string) (string, error) {
 		return "", fmt.Errorf("获取数据库加密密钥失败: %w", err)
 	}
 
-	encryptedKey, err := cryptoutil.EncryptAESGCM(key, domainEncryptKey, aad)
+	return encryptApplicationSeed(domainEncryptKey, key, aad)
+}
+
+func encryptApplicationSeed(dbEncryptionKey, seed []byte, aad string) (string, error) {
+	encryptedKey, err := cryptoutil.EncryptAESGCM(dbEncryptionKey, seed, aad)
 	if err != nil {
 		return "", fmt.Errorf("加密密钥失败: %w", err)
 	}
