@@ -7,7 +7,7 @@ environment credentials and never tracks the currently promoted image.
 - `config/` declares non-sensitive production defaults and the required Secret keys.
 - `ingress/` declares Hermes' `/api` HTTP route. The gRPC port remains cluster-internal.
 
-The private `heliantheon/applications` repository pins this directory at an
+The private `heliantheons/applications` repository pins this directory at an
 immutable Git ref and supplies the release image plus encrypted runtime Secret.
 Application CI may update only that repository's `overlay/` directory.
 

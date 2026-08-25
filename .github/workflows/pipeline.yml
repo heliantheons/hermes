@@ -44,6 +44,6 @@ jobs:
       contents: read
     with:
       version: '${{ needs.ci.outputs.version }}'
-      updates: 'hermes/overlay/release.yaml=ghcr.io/heliantheon/hermes'
+      updates: 'hermes/overlay/release.yaml=ghcr.io/heliantheons/hermes'
     secrets:
       gitops_token: '${{ secrets.GITOPS_TOKEN }}'
