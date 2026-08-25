@@ -13,6 +13,7 @@ import (
 	"github.com/heliantheon/aegis-go/utilities/relation"
 	"github.com/heliantheon/common/config"
 	"github.com/heliantheon/common/logger"
+	"github.com/heliantheon/common/observability"
 	hermesconfig "github.com/heliantheon/hermes/config"
 	hermes "github.com/heliantheon/hermes/internal"
 	hermesgrpc "github.com/heliantheon/hermes/internal/grpc"
@@ -27,6 +28,11 @@ func main() {
 		Debug:  config.IsDebug(),
 	})
 	defer logger.Sync()
+	shutdownTracing, err := observability.Init(context.Background(), observability.Config{ServiceName: "hermes"})
+	if err != nil {
+		logger.Warnf("初始化 OpenTelemetry 失败，链路追踪保持降级: %v", err)
+	}
+	defer shutdownTracing()
 	if err := hermesconfig.Validate(); err != nil {
 		logger.Fatalf("Hermes 配置校验失败: %v", err)
 	}
@@ -64,7 +70,7 @@ func newGRPCServer(services *hermes.Services) (*grpc.Server, net.Listener, error
 		return nil, nil, fmt.Errorf("gRPC listen 失败: %w", err)
 	}
 
-	s := grpc.NewServer()
+	s := grpc.NewServer(grpc.StatsHandler(observability.GRPCServerStatsHandler()))
 	hermesv1.RegisterProvisionServiceServer(s, hermesgrpc.NewProvisionServiceServer(services.Provision))
 	hermesv1.RegisterResourceServiceServer(s, hermesgrpc.NewResourceServiceServer(services.Resource))
 	hermesv1.RegisterKeyServiceServer(s, hermesgrpc.NewKeyServiceServer(services.Key))
@@ -84,7 +90,9 @@ func startHTTP(services *hermes.Services) {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	r := gin.Default()
+	r := gin.New()
+	r.Use(observability.GinMiddleware("hermes")...)
+	r.Use(gin.Recovery())
 	r.RedirectTrailingSlash = false
 
 	r.GET("/health", func(c *gin.Context) {
