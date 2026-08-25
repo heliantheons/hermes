@@ -7,7 +7,7 @@ require (
 	github.com/go-json-experiment/json v0.0.0-20260214004413-d219187c3433
 	github.com/heliantheon/aegis-go/guard v0.0.2-0.20260810161529-b6105ce3299f
 	github.com/heliantheon/aegis-go/utilities v0.0.2-0.20260810161529-b6105ce3299f
-	github.com/heliantheon/common v0.0.0-20260825100023-d2d67cac08ac
+	github.com/heliantheon/common v0.0.0-20260825100603-d0159ef384e7
 	google.golang.org/grpc v1.83.0
 	google.golang.org/protobuf v1.36.11
 	gorm.io/gorm v1.30.0
