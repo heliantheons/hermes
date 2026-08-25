@@ -38,7 +38,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: hermes
-          image: ghcr.io/heliantheon/hermes:unreleased
+          image: ghcr.io/heliantheons/hermes:unreleased
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
