@@ -375,7 +375,8 @@ func (s *ProvisionService) GetApplication(ctx context.Context, appID string) (*m
 }
 
 var applicationFilters = filter.Whitelist{
-	"name": {filter.Eq, filter.Pre},
+	"app_id": {filter.Eq},
+	"name":   {filter.Eq, filter.Pre},
 }
 
 // ListApplications 列出应用（游标分页）
