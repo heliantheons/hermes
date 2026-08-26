@@ -66,27 +66,29 @@ type RelationshipUpdateRequest struct {
 	ExpiresAt   patch.Optional[string] `json:"expires_at,omitempty"`
 }
 
-// RelationshipResponse 关系（无 _id，expires_at 为 ISO 字符串）
+// RelationshipResponse 关系（包含变更标识，expires_at 为 ISO 字符串）
 type RelationshipResponse struct {
-	ServiceID   string  `json:"service_id"`
-	SubjectType string  `json:"subject_type"`
-	SubjectID   string  `json:"subject_id"`
-	Relation    string  `json:"relation"`
-	ObjectType  string  `json:"object_type"`
-	ObjectID    string  `json:"object_id"`
-	CreatedAt   string  `json:"created_at"`
-	ExpiresAt   *string `json:"expires_at,omitempty"`
+	RelationshipID uint    `json:"relationship_id"`
+	ServiceID      string  `json:"service_id"`
+	SubjectType    string  `json:"subject_type"`
+	SubjectID      string  `json:"subject_id"`
+	Relation       string  `json:"relation"`
+	ObjectType     string  `json:"object_type"`
+	ObjectID       string  `json:"object_id"`
+	CreatedAt      string  `json:"created_at"`
+	ExpiresAt      *string `json:"expires_at,omitempty"`
 }
 
 func NewRelationshipResponse(r *models.Relationship) RelationshipResponse {
 	resp := RelationshipResponse{
-		ServiceID:   r.ServiceID,
-		SubjectType: r.SubjectType,
-		SubjectID:   r.SubjectID,
-		Relation:    r.Relation,
-		ObjectType:  r.ObjectType,
-		ObjectID:    r.ObjectID,
-		CreatedAt:   FormatTime(r.CreatedAt),
+		RelationshipID: r.ID,
+		ServiceID:      r.ServiceID,
+		SubjectType:    r.SubjectType,
+		SubjectID:      r.SubjectID,
+		Relation:       r.Relation,
+		ObjectType:     r.ObjectType,
+		ObjectID:       r.ObjectID,
+		CreatedAt:      FormatTime(r.CreatedAt),
 	}
 	if r.ExpiresAt != nil {
 		s := FormatTime(*r.ExpiresAt)
