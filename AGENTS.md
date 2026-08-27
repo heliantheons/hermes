@@ -8,6 +8,8 @@ This repository owns Helios identity persistence, provisioning, and relationship
 - Hermes owns its language-neutral gRPC Schema under `proto/v1`.
 - Reusable guards belong to `heliantheon/aegis-go`.
 - Domain-independent infrastructure belongs to `heliantheon/common`.
+- Kubernetes desired state belongs to the private `heliantheons/applications`
+  repository. This public repository owns the image, not deployment manifests.
 
 ## Commands
 
