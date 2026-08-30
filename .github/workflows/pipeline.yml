@@ -44,7 +44,7 @@ jobs:
       contents: read
     with:
       version: '${{ needs.ci.outputs.version }}'
-      updates: 'apps/hermes/release.yaml=ghcr.io/heliantheons/hermes'
+      updates: 'deploy/01/hermes/release.yaml=ghcr.io/heliantheons/hermes'
       gitops_app_id: '4727462'
     secrets:
       gitops_app_private_key: '${{ secrets.GITOPS_APP_PRIVATE_KEY }}'
