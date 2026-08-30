@@ -85,6 +85,7 @@ type ApplicationCreateRequest struct {
 	AppID                         string   `json:"app_id"`
 	Name                          string   `json:"name" binding:"required"`
 	Description                   string   `json:"description" binding:"required"`
+	LogoURL                       *string  `json:"logo_url"`
 	AllowedRedirectURIs           []string `json:"allowed_redirect_uris"`
 	AllowedOrigins                []string `json:"allowed_origins"`
 	AllowedLogoutURIs             []string `json:"allowed_logout_uris"`

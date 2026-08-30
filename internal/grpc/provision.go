@@ -123,6 +123,7 @@ func (s *provisionServiceServer) CreateApplication(ctx context.Context, req *her
 		DomainID:            req.GetDomainId(),
 		Name:                req.GetName(),
 		Description:         req.GetDescription(),
+		LogoURL:             req.LogoUrl,
 		AllowedRedirectURIs: req.GetAllowedRedirectUris(),
 		AllowedOrigins:      req.GetAllowedOrigins(),
 		AllowedLogoutURIs:   req.GetAllowedLogoutUris(),

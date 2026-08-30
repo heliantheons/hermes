@@ -196,6 +196,7 @@ message CreateApplicationRequest {
   optional uint32 id_token_expires_in = 9;
   optional uint32 refresh_token_expires_in = 10;
   optional uint32 refresh_token_absolute_expires_in = 11;
+  optional string logo_url = 12;
 }
 
 message UpdateApplicationRequest {
