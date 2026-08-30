@@ -1248,6 +1248,7 @@ type CreateApplicationRequest struct {
 	IdTokenExpiresIn              *uint32                `protobuf:"varint,9,opt,name=id_token_expires_in,json=idTokenExpiresIn,proto3,oneof" json:"id_token_expires_in,omitempty"`
 	RefreshTokenExpiresIn         *uint32                `protobuf:"varint,10,opt,name=refresh_token_expires_in,json=refreshTokenExpiresIn,proto3,oneof" json:"refresh_token_expires_in,omitempty"`
 	RefreshTokenAbsoluteExpiresIn *uint32                `protobuf:"varint,11,opt,name=refresh_token_absolute_expires_in,json=refreshTokenAbsoluteExpiresIn,proto3,oneof" json:"refresh_token_absolute_expires_in,omitempty"`
+	LogoUrl                       *string                `protobuf:"bytes,12,opt,name=logo_url,json=logoUrl,proto3,oneof" json:"logo_url,omitempty"`
 	unknownFields                 protoimpl.UnknownFields
 	sizeCache                     protoimpl.SizeCache
 }
@@ -1357,6 +1358,13 @@ func (x *CreateApplicationRequest) GetRefreshTokenAbsoluteExpiresIn() uint32 {
 		return *x.RefreshTokenAbsoluteExpiresIn
 	}
 	return 0
+}
+
+func (x *CreateApplicationRequest) GetLogoUrl() string {
+	if x != nil && x.LogoUrl != nil {
+		return *x.LogoUrl
+	}
+	return ""
 }
 
 type UpdateApplicationRequest struct {
@@ -2354,7 +2362,7 @@ const file_v1_provision_proto_rawDesc = "" +
 	"\x0fApplicationList\x12:\n" +
 	"\fapplications\x18\x01 \x03(\v2\x16.hermes.v1.ApplicationR\fapplications\x12\x1f\n" +
 	"\vnext_cursor\x18\x02 \x01(\tR\n" +
-	"nextCursor\"\xd8\x04\n" +
+	"nextCursor\"\x85\x05\n" +
 	"\x18CreateApplicationRequest\x12\x1b\n" +
 	"\tdomain_id\x18\x01 \x01(\tR\bdomainId\x12\x1a\n" +
 	"\x06app_id\x18\x02 \x01(\tH\x00R\x05appId\x88\x01\x01\x12\x12\n" +
@@ -2367,11 +2375,13 @@ const file_v1_provision_proto_rawDesc = "" +
 	"\x13id_token_expires_in\x18\t \x01(\rH\x01R\x10idTokenExpiresIn\x88\x01\x01\x12<\n" +
 	"\x18refresh_token_expires_in\x18\n" +
 	" \x01(\rH\x02R\x15refreshTokenExpiresIn\x88\x01\x01\x12M\n" +
-	"!refresh_token_absolute_expires_in\x18\v \x01(\rH\x03R\x1drefreshTokenAbsoluteExpiresIn\x88\x01\x01B\t\n" +
+	"!refresh_token_absolute_expires_in\x18\v \x01(\rH\x03R\x1drefreshTokenAbsoluteExpiresIn\x88\x01\x01\x12\x1e\n" +
+	"\blogo_url\x18\f \x01(\tH\x04R\alogoUrl\x88\x01\x01B\t\n" +
 	"\a_app_idB\x16\n" +
 	"\x14_id_token_expires_inB\x1b\n" +
 	"\x19_refresh_token_expires_inB$\n" +
-	"\"_refresh_token_absolute_expires_in\"\xbd\x05\n" +
+	"\"_refresh_token_absolute_expires_inB\v\n" +
+	"\t_logo_url\"\xbd\x05\n" +
 	"\x18UpdateApplicationRequest\x12\x15\n" +
 	"\x06app_id\x18\x01 \x01(\tR\x05appId\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01\x12%\n" +

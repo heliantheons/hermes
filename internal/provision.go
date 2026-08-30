@@ -331,6 +331,7 @@ func (s *ProvisionService) CreateApplication(ctx context.Context, req *dto.Appli
 		AppID:                         appID,
 		Name:                          req.Name,
 		Description:                   &desc,
+		LogoURL:                       req.LogoURL,
 		AllowedRedirectURIs:           allowedRedirectURIs,
 		AllowedOrigins:                allowedOrigins,
 		AllowedLogoutURIs:             allowedLogoutURIs,
