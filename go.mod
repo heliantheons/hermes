@@ -5,8 +5,8 @@ go 1.26
 require (
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-json-experiment/json v0.0.0-20260214004413-d219187c3433
-	github.com/heliantheon/aegis-go/guard v0.0.2-0.20260810161529-b6105ce3299f
-	github.com/heliantheon/aegis-go/utilities v0.0.2-0.20260810161529-b6105ce3299f
+	github.com/heliantheon/aegis-go/guard v0.0.2
+	github.com/heliantheon/aegis-go/utilities v0.0.2
 	github.com/heliantheon/common v0.0.0-20260825105011-3b96772d2b87
 	google.golang.org/grpc v1.83.0
 	google.golang.org/protobuf v1.36.11
@@ -44,7 +44,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0 // indirect
 	github.com/hashicorp/go-version v1.6.0 // indirect
-	github.com/heliantheon/aegis-go/service v0.0.2-0.20260810161529-b6105ce3299f // indirect
+	github.com/heliantheon/aegis-go/service v0.0.2 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.6.0 // indirect
